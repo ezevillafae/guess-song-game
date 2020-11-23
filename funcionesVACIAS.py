@@ -4,18 +4,11 @@ import random
 import math
 import unicodedata
 
-def modificarArtistaYCancion(cadena,artistaYCancion):
-    """toma la cadena, filtra caracteres especiales y agrega cada 
-    frase que este separada por ; en un nuevo elemento de la lista artistaYCancion"""
+def modificarArtistaYCancion(cadena,artistaYcancion):
+    """toma la cadena, filtra caracteres especiales y agrega los elemenos a la lista separados por ;"""
     cadena = filtrar(cadena)
-    cadena = cadena + ";" #se agrega un ; al final para recorrer toda la cadena
-    elemento = ""
-    for letra in cadena:
-        if letra != ";":
-            elemento = elemento + letra    
-        else:
-            artistaYCancion.append(elemento)
-            elemento = ""
+    for e in cadena.split(";"):
+        artistaYcancion.append(e)
             
 # ALERTA : SE QUEDA CON TODAS LAS ORACIONES 
 def modificarLetra(datosArchivo,letra):
@@ -32,7 +25,9 @@ def lectura(archivo, letra, artistaYcancion): #se queda solo con los oraciones d
     modificarLetra(cancion,letra)
 
 def seleccion(letra):#elige uno al azar, devuelve ese y el siguiente
-    return (["linea 1","linea 2"])
+    azar=random.randrange(1,N)
+    siguiente = azar + 1 
+    return [letra[azar],letra[siguiente]]
 
 def puntos(n):
     #devuelve el puntaje, segun seguidilla
