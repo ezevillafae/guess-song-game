@@ -31,7 +31,6 @@ def seleccion(letra):#elige uno al azar, devuelve ese y el siguiente
     return [letra[azar],letra[siguiente]]
 
 def puntos(n):
-    puntaje=0
     if n==1 or n==0:
         puntaje+=2
     elif n>1:
