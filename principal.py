@@ -12,6 +12,7 @@ from funcionesVACIAS import *
 def main():
 
 
+
         #Centrar la ventana y despues inicializar pygame
         os.environ["SDL_VIDEO_CENTERED"] = "1"
         pygame.init()
@@ -23,10 +24,15 @@ def main():
         #definimos funciones
 
 
+
+        screen1 = pygame.display.set_mode((ANCHO, ALTO))
+
+
+
         #tiempo total del juego
         gameClock = pygame.time.Clock()
         totaltime = 0
-        segundos = TIEMPO_MAX
+        segundos = TIEMPO_MAX +  pygame.time.get_ticks()/1000
         fps = FPS_inicial
         artistaYcancion=[]
         puntos = 0
@@ -35,6 +41,9 @@ def main():
         correctas=0
         elegidos= []
         masDeUnaVuelta = False
+
+        bienVenido(screen1,segundos)# pantalla menu
+
 
         #elige una cancion de todas las disponibles
         azar=random.randrange(1,N+1)
@@ -50,6 +59,7 @@ def main():
 
 ##        print(lista)
 
+
         ayuda = "Cancionero"
         dibujar(screen, palabraUsuario, lista, puntos, segundos, ayuda)
 
@@ -57,9 +67,19 @@ def main():
         # 1 frame cada 1/fps segundos
             gameClock.tick(fps)
             totaltime += gameClock.get_time()
+            if segundos<1:
+                endG()
+                pantallaNueva(screen, puntos)
+                j=0
+                while j < 1:
+                        for e in pygame.event.get():
+                            if e.type == QUIT:
+                                pygame.quit()
+                                return
 
             if True:
             	fps = 3
+
 
             #Buscar la tecla apretada del modulo de eventos de pygame
             for e in pygame.event.get():
@@ -68,10 +88,14 @@ def main():
                 if e.type == QUIT:
                     pygame.quit()
                     return()
-
+                if e.type == KEYDOWN:
+                    letraApretada = dameLetraApretada(e.key)
+                    if(letraApretada=="-"):
+                        screen.fill(COLOR_FONDO)
                 #Ver si fue apretada alguna tecla
                 if e.type == KEYDOWN:
                     letraApretada = dameLetraApretada(e.key)
+
                     palabraUsuario += letraApretada
                     if e.key == K_BACKSPACE:
                         palabraUsuario = palabraUsuario[0:len(palabraUsuario)-1]
@@ -117,6 +141,8 @@ def main():
             #Dibujar de nuevo todo
             dibujar(screen, palabraUsuario, lista, puntos, segundos, ayuda)
             pygame.display.flip()
+
+
 
         while 1:
             #Esperar el QUIT del usuario
