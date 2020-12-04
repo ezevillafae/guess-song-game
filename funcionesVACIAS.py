@@ -7,6 +7,7 @@ import unicodedata
 def modificarArtistaYCancion(cadena,artistaYcancion):
     """toma la cadena, filtra caracteres especiales y agrega los elemenos a la lista separados por ;"""
     cadena = filtrar(cadena)
+    print(cadena)
     for e in cadena.split(";"):
         artistaYcancion.append(e)
             
@@ -30,13 +31,29 @@ def seleccion(letra):#elige uno al azar, devuelve ese y el siguiente
     return [letra[azar],letra[siguiente]]
 
 def puntos(n):
-    #devuelve el puntaje, segun seguidilla
-    return 5
+    puntaje=0
+    if n==1 or n==0:
+        puntaje+=2
+    elif n>1:
+        puntaje=puntaje+2**n
+    else:
+        puntaje=-2
+    return puntaje
 
 
-def esCorrecta(palabraUsuario, artistaYCancion, correctas):
-    #chequea que sea correcta, que pertenece solo a la frase siguiente. Devuelve puntaje segun seguidilla
-    return puntos(1)
+def esCorrecta(palabraUsuario, artistaYcancion, correctas):
+    palnueva=palabraUsuario.strip()
+    correct=False
+    valor=0
+    for palabraUsuario1 in artistaYcancion:
+        palnueva1=palabraUsuario1.strip()
+        if palnueva == palnueva1:
+            correct=True
+    if correct==True:
+        valor=puntos(correctas)
+    else:
+        valor=puntos(-1)
+    return valor
 
 
 
