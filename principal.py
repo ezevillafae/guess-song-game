@@ -20,7 +20,9 @@ def main():
         #Preparar la ventana
         pygame.display.set_caption("Cancionero...")
         screen = pygame.display.set_mode((ANCHO, ALTO))
-        #definimos funciones
+
+        #Pantalla de bienvenida
+        segmenu = bienvenidos(screen)
 
 
         #tiempo total del juego
@@ -53,13 +55,10 @@ def main():
         ayuda = "Cancionero"
         dibujar(screen, palabraUsuario, lista, puntos, segundos, ayuda)
 
-        while segundos > fps/1000:
-        # 1 frame cada 1/fps segundos
+        while segundos > 0:
+        
             gameClock.tick(fps)
-            totaltime += gameClock.get_time()
 
-            if True:
-            	fps = 3
 
             #Buscar la tecla apretada del modulo de eventos de pygame
             for e in pygame.event.get():
@@ -67,7 +66,7 @@ def main():
                 #QUIT es apretar la X en la ventana
                 if e.type == QUIT:
                     pygame.quit()
-                    return()
+                    quit()
 
                 #Ver si fue apretada alguna tecla
                 if e.type == KEYDOWN:
@@ -78,12 +77,16 @@ def main():
                     if e.key == K_RETURN:
                         #chequea si es correcta y suma o resta puntos
                         sumar=esCorrecta(palabraUsuario, artistaYcancion, correctas)
+                        print("Puntos +",sumar)
                         puntos+=sumar
+                        print("Puntos :",puntos)
 
                         if sumar>0:
                             correctas=correctas+1
+                            print("Correctas ",correctas)
                         else:
                             correctas=0
+                            print("Correctas ",correctas)
                         if len(elegidos)==N:
                                 elegidos=[]
                                 masDeUnaVuelta = True
@@ -104,30 +107,24 @@ def main():
                         artistaYcancion=[]
                         letra = []
                         lectura(archivo, letra, artistaYcancion)
-
                         #elige una linea al azar y su siguiente
                         lista=seleccion(letra)
 
 
-            segundos = TIEMPO_MAX - pygame.time.get_ticks()/1000
+            segundos = TIEMPO_MAX - pygame.time.get_ticks()/1000 + segmenu
 
             #Limpiar pantalla anterior
             screen.fill(COLOR_FONDO)
 
             #Dibujar de nuevo todo
             dibujar(screen, palabraUsuario, lista, puntos, segundos, ayuda)
-            pygame.display.flip()
+            pygame.display.update()
 
-        while 1:
-            #Esperar el QUIT del usuario
-            for e in pygame.event.get():
-                if e.type == QUIT:
-                    pygame.quit()
-                    return
-
+        #Pantalla de Ranking
+        ranking(screen)
 
         archivo.close()
 
 #Programa Principal ejecuta Main
-if __name__ == "__main__":
+while 1:
     main()

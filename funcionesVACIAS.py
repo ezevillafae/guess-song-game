@@ -7,9 +7,9 @@ import unicodedata
 def modificarArtistaYCancion(cadena,artistaYcancion):
     """toma la cadena, filtra caracteres especiales y agrega los elemenos a la lista separados por ;"""
     cadena = filtrar(cadena)
-    print(cadena)
     for e in cadena.split(";"):
         artistaYcancion.append(e)
+    print(artistaYcancion)
             
 # ALERTA : SE QUEDA CON TODAS LAS ORACIONES 
 def modificarLetra(datosArchivo,letra):
@@ -22,38 +22,31 @@ def lectura(archivo, letra, artistaYcancion): #se queda solo con los oraciones d
     datosArchivo = archivo.readlines()
     primeraLinea = datosArchivo[0] #guardo la primera linea
     cancion = datosArchivo[1:] #guardo las demas lineas
-    modificarArtistaYCancion(primeraLinea,artistaYcancion) 
-    modificarLetra(cancion,letra)
+    modificarArtistaYCancion(primeraLinea,artistaYcancion) #llena la lista artistaYcancion
+    modificarLetra(cancion,letra) #llena la lista letra
 
 def seleccion(letra):#elige uno al azar, devuelve ese y el siguiente
-    azar=random.randrange(1,N)
+    azar=random.randrange(0,len(letra)-1) #del 0 al anteultimo
     siguiente = azar + 1 
     return [letra[azar],letra[siguiente]]
 
 def puntos(n):
-    puntaje=0
-    if n==1 or n==0:
-        puntaje+=2
-    elif n>1:
-        puntaje=puntaje+2**n
+    if n > 0: #Si acierta
+        if n >= 3: #Si acerto 3 veces
+            return 2 ** n
+        else:
+            return 2
     else:
-        puntaje=-2
-    return puntaje
+        return -2 
 
 
 def esCorrecta(palabraUsuario, artistaYcancion, correctas):
-    palnueva=palabraUsuario.strip()
-    correct=False
-    valor=0
-    for palabraUsuario1 in artistaYcancion:
-        palnueva1=palabraUsuario1.strip()
-        if palnueva == palnueva1:
-            correct=True
-    if correct==True:
-        valor=puntos(correctas)
-    else:
-        valor=puntos(-1)
-    return valor
+    for respuesta in artistaYcancion:
+        if palabraUsuario == respuesta:
+            correctas += 1
+            return puntos(correctas)
+    correctas = 0 #Si es incorrecta vuelve a cero
+    return puntos(correctas)
 
 
 

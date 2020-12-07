@@ -59,6 +59,8 @@ def dameLetraApretada(key):
         return("-")
     elif key == K_SPACE:
        return(" ")
+    elif key == 241: #241 es el codigo de la ñ
+        return("ñ")
     else:
         return("")
 
@@ -89,4 +91,54 @@ def dibujar(screen, palabraUsuario, lista, puntos, segundos, ayuda):
     screen.blit(defaultFontGrande.render(lista[0], 1, COLOR_LETRAS), (ANCHO//2-len(lista[0])*TAMANNO_LETRA_GRANDE//4,(TAMANNO_LETRA_GRANDE)*2))
     screen.blit(defaultFontGrande.render(lista[1], 1, COLOR_LETRAS), (ANCHO//2-len(lista[1])*TAMANNO_LETRA_GRANDE//4,(TAMANNO_LETRA_GRANDE)*4))
 
+def bienvenidos(screen):
+    """Loop pantalla bienvenidos"""
+    continuar = False
+    dibujarBienvenidos(screen) 
+    #intro = pygame.mixer.Sound("sounds/intro.mp3")
+    #intro.play()
+    
+    while not(continuar): # ciclo espera que aprete una tecla para empezar
+        for e in pygame.event.get():
+            if e.type == pygame.QUIT:
+                quit()
+            if e.type == pygame.KEYDOWN:
+                continuar = True
+        pygame.display.update()
+        
+    #intro.fadeout(2000)
+    return pygame.time.get_ticks()/1000 #segundos transcurridos en el menú
+    
 
+def dibujarBienvenidos(screen):
+    """Crea y muestra los elementos en la pantalla"""
+
+    fuente1 = pygame.font.Font("fonts/Ranchers-Regular.ttf",50)
+    textCancionero = fuente1.render("Cancionero",1,COLOR_TEXTO)
+
+    #Insertar en pantalla
+    screen.blit(textCancionero,(ANCHO/2,ALTO/2))
+
+def ranking(screen):
+    continuar = False
+    screen.fill((255,255,255)) # Limpiar pantalla
+
+    dibujarRanking(screen)
+
+    while not(continuar):
+        for e in pygame.event.get():
+            if e.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+            if e.type == pygame.KEYDOWN:
+                continuar = True
+        pygame.display.update()
+            
+def dibujarRanking(screen):
+    fuente1 = pygame.font.Font(None,40)
+    textoTop = fuente1.render("Top Jugadores",1,COLOR_LETRAS)
+    
+
+    # Mostrar en pantalla
+    screen.blit(textoTop,(0,0))
+          
