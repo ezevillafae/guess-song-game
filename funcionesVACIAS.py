@@ -2,7 +2,6 @@ from configuracion import *
 from regex import *
 import random
 import math
-import unicodedata
 
 def modificarArtistaYCancion(cadena,artistaYcancion):
     """toma la cadena, filtra caracteres especiales y agrega los elemenos a la lista separados por ;"""

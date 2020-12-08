@@ -66,64 +66,75 @@ def dameLetraApretada(key):
 
 
 def dibujar(screen, palabraUsuario, lista, puntos, segundos, ayuda):
-
+    fondo = pygame.image.load("imagenes/fondo_1.jpg")
     defaultFont= pygame.font.Font( pygame.font.get_default_font(), TAMANNO_LETRA)
     defaultFontGrande= pygame.font.Font( pygame.font.get_default_font(), TAMANNO_LETRA_GRANDE)
 
     #Linea Horizontal
-    pygame.draw.line(screen, (255,255,255), (0, ALTO-70) , (ANCHO, ALTO-70), 5)
+    screen.blit(fondo,(0,0))
 
     #muestra lo que escribe el jugador
     screen.blit(defaultFont.render(palabraUsuario, 1, COLOR_TEXTO), (190, 570))
     #muestra el puntaje
-    screen.blit(defaultFont.render("Puntos: " + str(puntos), 1, COLOR_TEXTO), (680, 10))
+    screen.blit(defaultFont.render("Puntos: " + str(puntos), 1, COLOR_TEXTO), (825, 33))
     #muestra los segundos y puede cambiar de color con el tiempo
     if(segundos<15):
         ren = defaultFont.render("Tiempo: " + str(int(segundos)), 1, COLOR_TIEMPO_FINAL)
     else:
         ren = defaultFont.render("Tiempo: " + str(int(segundos)), 1, COLOR_TEXTO)
-    screen.blit(ren, (10, 10))
+    screen.blit(ren, (38, 33))
 
     #muestra el nombre
-    screen.blit(defaultFont.render(ayuda, 1, COLOR_PELI), (ANCHO//2-len(ayuda)*TAMANNO_LETRA//4,(TAMANNO_LETRA)))
+    screen.blit(defaultFont.render(ayuda, 1, COLOR_PELI), (ANCHO//2-len(ayuda)*TAMANNO_LETRA//4,33))
 
     #muestra las 2 lineas
-    screen.blit(defaultFontGrande.render(lista[0], 1, COLOR_LETRAS), (ANCHO//2-len(lista[0])*TAMANNO_LETRA_GRANDE//4,(TAMANNO_LETRA_GRANDE)*2))
-    screen.blit(defaultFontGrande.render(lista[1], 1, COLOR_LETRAS), (ANCHO//2-len(lista[1])*TAMANNO_LETRA_GRANDE//4,(TAMANNO_LETRA_GRANDE)*4))
+    screen.blit(defaultFontGrande.render(lista[0], 1, COLOR_LETRAS), (ANCHO//2-len(lista[0])*TAMANNO_LETRA_GRANDE//4,187.04))
+    screen.blit(defaultFontGrande.render(lista[1], 1, COLOR_LETRAS), (ANCHO//2-len(lista[1])*TAMANNO_LETRA_GRANDE//4,238.24))
+
+# ------------------------------ Pantalla bienvenidos ------------------------------------
 
 def bienvenidos(screen):
     """Loop pantalla bienvenidos"""
+    reloj = pygame.time.Clock()
     continuar = False
-    dibujarBienvenidos(screen) 
+    contador = 1
     #intro = pygame.mixer.Sound("sounds/intro.mp3")
     #intro.play()
     
     while not(continuar): # ciclo espera que aprete una tecla para empezar
+        reloj.tick(2)
         for e in pygame.event.get():
             if e.type == pygame.QUIT:
                 quit()
             if e.type == pygame.KEYDOWN:
                 continuar = True
+        if contador == 1:
+            dibujarBienvenidos(screen,contador)
+            contador = 2
+        elif contador == 2:
+            dibujarBienvenidos(screen,contador)
+            contador = 1 
         pygame.display.update()
         
     #intro.fadeout(2000)
     return pygame.time.get_ticks()/1000 #segundos transcurridos en el menú
     
 
-def dibujarBienvenidos(screen):
+def dibujarBienvenidos(screen,contador):
     """Crea y muestra los elementos en la pantalla"""
+    imagen = pygame.image.load("imagenes/intro_"+str(contador)+".jpg").convert()
 
-    fuente1 = pygame.font.Font("fonts/Ranchers-Regular.ttf",50)
-    textCancionero = fuente1.render("Cancionero",1,COLOR_TEXTO)
+    
 
     #Insertar en pantalla
-    screen.blit(textCancionero,(ANCHO/2,ALTO/2))
+    screen.blit(imagen,(0,0))
+
+# -------------------------------- Pantalla Ranking ----------------------------------------
 
 def ranking(screen):
     continuar = False
     screen.fill((255,255,255)) # Limpiar pantalla
 
-    dibujarRanking(screen)
 
     while not(continuar):
         for e in pygame.event.get():
@@ -132,13 +143,17 @@ def ranking(screen):
                 quit()
             if e.type == pygame.KEYDOWN:
                 continuar = True
+
+        dibujarRanking(screen)
         pygame.display.update()
+
             
 def dibujarRanking(screen):
     fuente1 = pygame.font.Font(None,40)
-    textoTop = fuente1.render("Top Jugadores",1,COLOR_LETRAS)
-    
+    fondo = pygame.image.load("imagenes/top_1.jpg")    
 
     # Mostrar en pantalla
-    screen.blit(textoTop,(0,0))
-          
+    screen.blit(fondo,(0,0))
+
+def lecturaArchivoRanking():
+    pass

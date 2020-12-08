@@ -52,7 +52,7 @@ def main():
 
 ##        print(lista)
 
-        ayuda = "Cancionero"
+        ayuda = ""
         dibujar(screen, palabraUsuario, lista, puntos, segundos, ayuda)
 
         while segundos > 0:
