@@ -1,4 +1,5 @@
 from configuracion import *
+from extras import playSoundAcert,playSoundAcertBonus,playSoundError
 from regex import *
 import random
 import math
@@ -32,10 +33,13 @@ def seleccion(letra):#elige uno al azar, devuelve ese y el siguiente
 def puntos(n):
     if n > 0: #Si acierta
         if n >= 3: #Si acerto 3 veces
+            playSoundAcertBonus() #sonido de acierto
             return 2 ** n
         else:
+            playSoundAcert() #sonido de acierto
             return 2
     else:
+        playSoundError() #sonido de error
         return -2 
 
 

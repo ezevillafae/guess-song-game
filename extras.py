@@ -74,7 +74,7 @@ def dibujar(screen, palabraUsuario, lista, puntos, segundos, ayuda):
     screen.blit(fondo,(0,0))
 
     #muestra lo que escribe el jugador
-    screen.blit(defaultFont.render(palabraUsuario, 1, COLOR_TEXTO), (190, 570))
+    screen.blit(defaultFont.render(palabraUsuario, 1, COLOR_TEXTO), (181.52, 458.09))
     #muestra el puntaje
     screen.blit(defaultFont.render("Puntos: " + str(puntos), 1, COLOR_TEXTO), (825, 33))
     #muestra los segundos y puede cambiar de color con el tiempo
@@ -98,8 +98,8 @@ def bienvenidos(screen):
     reloj = pygame.time.Clock()
     continuar = False
     contador = 1
-    #intro = pygame.mixer.Sound("sounds/intro.mp3")
-    #intro.play()
+    intro = pygame.mixer.Sound("sounds/intro.mp3")
+    intro.play()
     
     while not(continuar): # ciclo espera que aprete una tecla para empezar
         reloj.tick(2)
@@ -107,7 +107,8 @@ def bienvenidos(screen):
             if e.type == pygame.QUIT:
                 quit()
             if e.type == pygame.KEYDOWN:
-                continuar = True
+                if e.key == 13:
+                    continuar = True
         if contador == 1:
             dibujarBienvenidos(screen,contador)
             contador = 2
@@ -116,18 +117,19 @@ def bienvenidos(screen):
             contador = 1 
         pygame.display.update()
         
-    #intro.fadeout(2000)
+    intro.fadeout(2000)
     return pygame.time.get_ticks()/1000 #segundos transcurridos en el menú
     
 
 def dibujarBienvenidos(screen,contador):
     """Crea y muestra los elementos en la pantalla"""
     imagen = pygame.image.load("imagenes/intro_"+str(contador)+".jpg").convert()
-
-    
+    fuente1= pygame.font.Font("fonts/FRAHV.TTF",18)
+    pressEnterText = fuente1.render("PRESIONE ENTER PARA JUGAR",1,(255,255,255))
 
     #Insertar en pantalla
     screen.blit(imagen,(0,0))
+    screen.blit(pressEnterText,(384.05,451.48))
 
 # -------------------------------- Pantalla Ranking ----------------------------------------
 
@@ -157,3 +159,17 @@ def dibujarRanking(screen):
 
 def lecturaArchivoRanking():
     pass
+
+# ----------------------------- Sonidos ----------------------------------
+
+def playSoundAcert():
+    sonido = pygame.mixer.Sound("sounds/sonido_acierto_1.mp3")
+    sonido.play()
+
+def playSoundAcertBonus():
+    sonido = pygame.mixer.Sound("sounds/sonido_aciertobonus_1.mp3")
+    sonido.play()
+
+def playSoundError():
+    sonido = pygame.mixer.Sound("sounds/sonido_error_1.mp3")
+    sonido.play()

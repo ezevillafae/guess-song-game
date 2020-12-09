@@ -111,7 +111,7 @@ def main():
                         lista=seleccion(letra)
 
 
-            segundos = TIEMPO_MAX - pygame.time.get_ticks()/1000 + segmenu
+            segundos = TIEMPO_MAX + segmenu - pygame.time.get_ticks()/1000
 
             #Limpiar pantalla anterior
             screen.fill(COLOR_FONDO)
