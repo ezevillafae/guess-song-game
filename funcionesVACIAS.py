@@ -3,6 +3,7 @@ from extras import playSoundAcert,playSoundAcertBonus,playSoundError
 from regex import *
 import random
 import math
+import unicodedata
 
 def modificarArtistaYCancion(cadena,artistaYcancion):
     """toma la cadena, filtra caracteres especiales y agrega los elemenos a la lista separados por ;"""
@@ -16,7 +17,8 @@ def modificarLetra(datosArchivo,letra):
     """Toma una lista y devuelve una nueva lista con elementos sin caracteres especiales y tildes"""
     for i in range(len(datosArchivo)):
         linea = filtrar(datosArchivo[i])
-        letra.append(linea)
+        if len(linea)<47: # para que entre en la pantalla
+            letra.append(linea)
 
 def lectura(archivo, letra, artistaYcancion): #se queda solo con los oraciones de cierta longitud y filtra tildes por ej
     datosArchivo = archivo.readlines()

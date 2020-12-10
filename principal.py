@@ -7,6 +7,7 @@ from configuracion import *
 from extras import *
 
 from funcionesVACIAS import *
+from ranking import *
 
 #Funcion principal
 def main():
@@ -32,6 +33,8 @@ def main():
         fps = FPS_inicial
         artistaYcancion=[]
         puntos = 0
+        nombre = ""
+        matrizPuntajes = []
         palabraUsuario = ""
         letra=[]
         correctas=0
@@ -121,8 +124,14 @@ def main():
             pygame.display.update()
 
         #Pantalla de Ranking
-        ranking(screen)
-
+        nombre = pedirNombre(screen)
+        escrituraArchivoRanking(nombre,puntos) #guardo nombre y puntos en archivo
+        lecturaArchivoRanking(matrizPuntajes) # leo archivo y lleno la matriz
+        matrizPuntajes = puntajesMaximos(matrizPuntajes) #obtengo los puntajes maximos 
+        matrizPuntajes = ordenarPorPuntajes(matrizPuntajes) #ordeno los puntajes de mayor a menor 
+        if len(matrizPuntajes) > 10:
+            matrizPuntajes = matrizPuntajes[:10] #tomo solo 10 si la matriz tiene 10 elementos o más
+        ranking(screen,matrizPuntajes)
         archivo.close()
 
 #Programa Principal ejecuta Main
