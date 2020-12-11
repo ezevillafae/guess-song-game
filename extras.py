@@ -148,9 +148,10 @@ def pedirNombre(screen):
             if e.type == pygame.QUIT:
                 quit()
             if e.type == pygame.KEYDOWN:
-                if e.key == 13:
+                if e.key == 13 and len(nombre)>0:
                     continuar = True
                 nombre = nombre + dameLetraApretada(e.key)
+                nombre = nombre.upper()
                 if e.key == K_BACKSPACE:
                     nombre = nombre[0:len(nombre)-1]
         dibujarPedirNombre(screen,nombre)
@@ -160,13 +161,14 @@ def pedirNombre(screen):
 
 def dibujarPedirNombre(screen,nombre):
     imagen = pygame.image.load("imagenes/fondo_introducir_nombre.jpg")
-    fuente1= pygame.font.Font("fonts/FRAHV.TTF",18)
+    fuente1= pygame.font.Font("fonts/FRADM.TTF",18)
+    fuente1Grande = pygame.font.Font("fonts/FRAHV.TTF",36) 
     introduzcaNombreText = fuente1.render("INTRODUZCA SU NOMBRE",1,(255,255,255))
-    nombreText = fuente1.render(nombre,1,(255,255,255))
+    nombreText = fuente1Grande.render(nombre,1,(255,255,255))
 
     screen.blit(imagen,(0,0))
-    screen.blit(introduzcaNombreText,(0,0))
-    screen.blit(nombreText,(0,50))
+    screen.blit(introduzcaNombreText,(405,200))
+    screen.blit(nombreText,(420,269))
 
 # -------------------------------- Pantalla Ranking ----------------------------------------
 
@@ -190,14 +192,16 @@ def ranking(screen,matrizPuntajes):
 def dibujarRanking(screen,matrizPuntajes):
     fuente1 = pygame.font.Font("fonts/FRADM.TTF",18)
     fondo = pygame.image.load("imagenes/top_1.jpg")
+    pressEnterText = fuente1.render("PRESIONE ENTER PARA JUGAR",1,(255,255,255))
 
-    posXNombre = 100
-    posXPuntaje = 200
-    posXTop = 0
+    posXNombre = 250
+    posXPuntaje = 450
+    posXTop = 100
     posYTopNombrePuntos = 200  
     textTop = 1  
     # Mostrar en pantalla
     screen.blit(fondo,(0,0))
+    screen.blit(pressEnterText,(0,0))
     for i in range(len(matrizPuntajes)):
         nombreActual = matrizPuntajes[i][0]
         puntajeActual = matrizPuntajes[i][1]
@@ -205,7 +209,7 @@ def dibujarRanking(screen,matrizPuntajes):
         textTop = textTop + 1
         screen.blit(fuente1.render(nombreActual,1,COLOR_LETRAS),(posXNombre,posYTopNombrePuntos))
         screen.blit(fuente1.render(puntajeActual,1,COLOR_LETRAS),(posXPuntaje,posYTopNombrePuntos))
-        posYTopNombrePuntos = posYTopNombrePuntos + 20
+        posYTopNombrePuntos = posYTopNombrePuntos + 25
 
 # ----------------------------- Sonidos ----------------------------------
 

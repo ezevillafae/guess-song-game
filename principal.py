@@ -125,12 +125,14 @@ def main():
 
         #Pantalla de Ranking
         nombre = pedirNombre(screen)
+        
         escrituraArchivoRanking(nombre,puntos) #guardo nombre y puntos en archivo
         lecturaArchivoRanking(matrizPuntajes) # leo archivo y lleno la matriz
         matrizPuntajes = puntajesMaximos(matrizPuntajes) #obtengo los puntajes maximos 
         matrizPuntajes = ordenarPorPuntajes(matrizPuntajes) #ordeno los puntajes de mayor a menor 
         if len(matrizPuntajes) > 10:
             matrizPuntajes = matrizPuntajes[:10] #tomo solo 10 si la matriz tiene 10 elementos o más
+            print(matrizPuntajes)
         ranking(screen,matrizPuntajes)
         archivo.close()
 

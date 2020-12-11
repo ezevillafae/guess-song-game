@@ -17,10 +17,11 @@ def modificarLetra(datosArchivo,letra):
     """Toma una lista y devuelve una nueva lista con elementos sin caracteres especiales y tildes"""
     for i in range(len(datosArchivo)):
         linea = filtrar(datosArchivo[i])
-        if len(linea)<47: # para que entre en la pantalla
+        if len(linea)> 1 and len(linea)<47: # para que entre en la pantalla y no tome lineas vacias
             letra.append(linea)
 
-def lectura(archivo, letra, artistaYcancion): #se queda solo con los oraciones de cierta longitud y filtra tildes por ej
+def lectura(archivo, letra, artistaYcancion):
+    """Lee las lineas del archivo y llena las listas letra y artistaycancion filtando caracteres especiael y tildes"""
     datosArchivo = archivo.readlines()
     primeraLinea = datosArchivo[0] #guardo la primera linea
     cancion = datosArchivo[1:] #guardo las demas lineas
@@ -34,8 +35,8 @@ def seleccion(letra):#elige uno al azar, devuelve ese y el siguiente
 
 def puntos(n):
     if n > 0: #Si acierta
-        if n >= 3: #Si acerto 3 veces
-            playSoundAcertBonus() #sonido de acierto
+        if n >= 3: #Si acerto 3 veces o mas
+            playSoundAcertBonus() #sonido de bonus
             return 2 ** n
         else:
             playSoundAcert() #sonido de acierto

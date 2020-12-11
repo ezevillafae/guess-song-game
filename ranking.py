@@ -54,7 +54,7 @@ def puntajeMaximoDeNombre(matrizPuntajes,nombre):
     return maximo
 
 def ordenarPorPuntajes(matrizPuntajes):
-    return sorted(matrizPuntajes, key=lambda x : -int(x[1]))
+    return sorted(matrizPuntajes, key=lambda x : int(x[1]),reverse=True)
 
 
 
