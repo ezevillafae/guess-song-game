@@ -1,7 +1,7 @@
 TAMANNO_LETRA = 25
 TAMANNO_LETRA_GRANDE = 40
 FPS_inicial = 30
-TIEMPO_MAX = 61
+TIEMPO_MAX = 10
 N=11 #la cantidad de letras de canciones en la carpeta
 
 ANCHO = 1024

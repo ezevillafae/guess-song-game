@@ -192,7 +192,7 @@ def ranking(screen,matrizPuntajes):
 def dibujarRanking(screen,matrizPuntajes):
     fuente1 = pygame.font.Font("fonts/FRADM.TTF",18)
     fondo = pygame.image.load("imagenes/top_1.jpg")
-    pressEnterText = fuente1.render("PRESIONE ENTER PARA JUGAR",1,(255,255,255))
+    pressEnterText = fuente1.render("PRESIONE ENTER PARA VOLVER AL MENÚ",1,(255,255,255))
 
     posXNombre = 250
     posXPuntaje = 450
@@ -201,7 +201,7 @@ def dibujarRanking(screen,matrizPuntajes):
     textTop = 1  
     # Mostrar en pantalla
     screen.blit(fondo,(0,0))
-    screen.blit(pressEnterText,(0,0))
+    screen.blit(pressEnterText,(155,500))
     for i in range(len(matrizPuntajes)):
         nombreActual = matrizPuntajes[i][0]
         puntajeActual = matrizPuntajes[i][1]
