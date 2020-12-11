@@ -101,7 +101,7 @@ def bienvenidos(screen):
     reloj = pygame.time.Clock() # creo el reloj
     continuar = False
     numImagen = 1
-    intro = pygame.mixer.Sound("sounds/intro.mp3")
+    intro = pygame.mixer.Sound("sounds/intro.ogg")
     intro.play()
     
     while not(continuar): # ciclo espera que aprete una tecla para empezar
@@ -214,13 +214,13 @@ def dibujarRanking(screen,matrizPuntajes):
 # ----------------------------- Sonidos ----------------------------------
 
 def playSoundAcert():
-    sonido = pygame.mixer.Sound("sounds/sonido_acierto_1.mp3")
+    sonido = pygame.mixer.Sound("sounds/sonido_acierto_1.ogg")
     sonido.play()
 
 def playSoundAcertBonus():
-    sonido = pygame.mixer.Sound("sounds/sonido_aciertobonus_1.mp3")
+    sonido = pygame.mixer.Sound("sounds/sonido_aciertobonus_1.ogg")
     sonido.play()
 
 def playSoundError():
-    sonido = pygame.mixer.Sound("sounds/sonido_error_1.mp3")
+    sonido = pygame.mixer.Sound("sounds/sonido_error_1.ogg")
     sonido.play()
