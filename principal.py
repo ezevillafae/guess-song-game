@@ -23,7 +23,8 @@ def main():
         screen = pygame.display.set_mode((ANCHO, ALTO))
 
         #Pantalla de bienvenida
-        segmenu = bienvenidos(screen)
+        matrizPuntajes = []
+        segmenu = bienvenidos(screen,matrizPuntajes)
 
 
         #tiempo total del juego
@@ -34,7 +35,7 @@ def main():
         artistaYcancion=[]
         puntos = 0
         nombre = ""
-        matrizPuntajes = []
+       
         palabraUsuario = ""
         letra=[]
         correctas=0
@@ -45,7 +46,6 @@ def main():
         azar=random.randrange(1,N+1)
         elegidos.append(azar) #la agrega a la lista de los ya elegidos
         archivo= open(".\\letras\\"+str(azar)+".txt","r", encoding='utf-8') # abre el archivo elegido con unicode.
-
 
         #lectura del archivo y filtrado de caracteres especiales, la primer linea es el artista y cancion
         lectura(archivo, letra, artistaYcancion)
@@ -124,15 +124,9 @@ def main():
             pygame.display.update()
 
         #Pantalla de Ranking
-        nombre = pedirNombre(screen)
+        nombre = pedirNombre(screen) # se pide nombre en pantalla
         
         escrituraArchivoRanking(nombre,puntos) #guardo nombre y puntos en archivo
-        lecturaArchivoRanking(matrizPuntajes) # leo archivo y lleno la matriz
-        matrizPuntajes = puntajesMaximos(matrizPuntajes) #obtengo los puntajes maximos 
-        matrizPuntajes = ordenarPorPuntajes(matrizPuntajes) #ordeno los puntajes de mayor a menor 
-        if len(matrizPuntajes) > 10:
-            matrizPuntajes = matrizPuntajes[:10] #tomo solo 10 si la matriz tiene 10 elementos o más
-            print(matrizPuntajes)
         ranking(screen,matrizPuntajes)
         archivo.close()
 

@@ -2,6 +2,7 @@ import pygame
 from pygame.locals import *
 from configuracion import *
 import re
+from ranking import *
 
 def dameLetraApretada(key):
     if key == K_a:
@@ -96,7 +97,7 @@ def dibujar(screen, palabraUsuario, lista, puntos, segundos, ayuda):
 
 # ------------------------------ Pantalla bienvenidos ------------------------------------
 
-def bienvenidos(screen):
+def bienvenidos(screen,matrizPuntajes):
     """Loop pantalla bienvenidos"""
     reloj = pygame.time.Clock() # creo el reloj
     continuar = False
@@ -112,6 +113,8 @@ def bienvenidos(screen):
             if e.type == pygame.KEYDOWN:
                 if e.key == 13:
                     continuar = True
+                if e.key == K_0:
+                    ranking(screen,matrizPuntajes)
         if numImagen == 1: # numImagen dentro de dibujar bienvenidos
             dibujarBienvenidos(screen,numImagen)
             numImagen = 2
@@ -174,9 +177,15 @@ def dibujarPedirNombre(screen,nombre):
 
 def ranking(screen,matrizPuntajes):
     continuar = False
+    
+    lecturaArchivoRanking(matrizPuntajes) # leo archivo y lleno la matriz
+    matrizPuntajes = puntajesMaximos(matrizPuntajes) #obtengo los puntajes maximos 
+    matrizPuntajes = ordenarPorPuntajes(matrizPuntajes) #ordeno los puntajes de mayor a menor 
+    if len(matrizPuntajes) > 10:
+        matrizPuntajes = matrizPuntajes[:10] #tomo solo 10 si la matriz tiene 10 elementos o más
+        print(matrizPuntajes)
+    
     screen.fill((255,255,255)) # Limpiar pantalla
-
-
     while not(continuar):
         for e in pygame.event.get():
             if e.type == pygame.QUIT:
