@@ -5,18 +5,17 @@ import random
 import math
 import unicodedata
 
-def modificarArtistaYCancion(cadena,artistaYcancion):
+def modificarArtistaYCancion(primeraLinea,artistaYcancion):
     """toma la cadena, filtra caracteres especiales y agrega los elemenos a la lista separados por ;"""
-    cadena = filtrar(cadena)
-    for e in cadena.split(";"):
+    primeraLinea = filtrar(primeraLinea)
+    for e in primeraLinea.split(";"):
         artistaYcancion.append(e)
     print(artistaYcancion)
             
-# ALERTA : SE QUEDA CON TODAS LAS ORACIONES 
-def modificarLetra(datosArchivo,letra):
+def modificarLetra(cancion,letra):
     """Toma una lista y devuelve una nueva lista con elementos sin caracteres especiales y tildes"""
-    for i in range(len(datosArchivo)):
-        linea = filtrar(datosArchivo[i])
+    for i in range(len(cancion)):
+        linea = filtrar(cancion[i])
         if len(linea)> 1 and len(linea)<47: # para que entre en la pantalla y no tome lineas vacias
             letra.append(linea)
 

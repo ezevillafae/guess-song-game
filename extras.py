@@ -61,7 +61,7 @@ def dameLetraApretada(key):
         return("-")
     elif key == K_SPACE:
        return(" ")
-    elif key == K_SEMICOLON or key == 241:
+    elif key == K_SEMICOLON or key == 241: # 241 es el codigo de la ñ
         return("ñ")
     else:
         return("")
@@ -111,7 +111,7 @@ def bienvenidos(screen,matrizPuntajes):
             if e.type == pygame.QUIT:
                 quit()
             if e.type == pygame.KEYDOWN:
-                if e.key == 13:
+                if e.key == K_RETURN:
                     continuar = True
                 if e.key == K_0:
                     ranking(screen,matrizPuntajes)
@@ -123,7 +123,7 @@ def bienvenidos(screen,matrizPuntajes):
             numImagen = 1 
         pygame.display.update()
         
-    intro.fadeout(2000)
+    intro.set_volume(0.3)
     return pygame.time.get_ticks()/1000 #segundos transcurridos en el menú
     
 
@@ -131,11 +131,14 @@ def dibujarBienvenidos(screen,numImagen):
     """Crea y muestra los elementos en la pantalla"""
     imagen = pygame.image.load("imagenes/intro_"+str(numImagen)+".jpg").convert()
     fuente1= pygame.font.Font("fonts/FRAHV.TTF",18)
+    fuente2 = pygame.font.Font("fonts/framd.ttf",15)
     pressEnterText = fuente1.render("PRESIONE ENTER PARA JUGAR",1,(255,255,255))
+    botonRanking = fuente2.render("MEJORES JUGADORES",1,(255,255,255))
 
     #Insertar en pantalla
     screen.blit(imagen,(0,0))
     screen.blit(pressEnterText,(384.05,451.48))
+    screen.blit(botonRanking, (300, 510))
 
 # --------------------------------- Pantalla Pedir Nombre ---------------------------------
 
@@ -151,7 +154,7 @@ def pedirNombre(screen):
             if e.type == pygame.QUIT:
                 quit()
             if e.type == pygame.KEYDOWN:
-                if e.key == 13 and len(nombre)>0:
+                if e.key == K_RETURN and len(nombre)>0: #tecla enter
                     continuar = True
                 nombre = nombre + dameLetraApretada(e.key)
                 nombre = nombre.upper()
@@ -192,7 +195,8 @@ def ranking(screen,matrizPuntajes):
                 pygame.quit()
                 quit()
             if e.type == pygame.KEYDOWN:
-                continuar = True
+                if e.key == K_RETURN:
+                    continuar = True
 
         dibujarRanking(screen,matrizPuntajes)
         pygame.display.update()

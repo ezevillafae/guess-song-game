@@ -53,7 +53,6 @@ def main():
         #elige una linea al azar y su siguiente
         lista=seleccion(letra)
 
-##        print(lista)
 
         ayuda = ""
         dibujar(screen, palabraUsuario, lista, puntos, segundos, ayuda)
