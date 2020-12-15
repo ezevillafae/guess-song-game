@@ -270,7 +270,7 @@ def dibujarPedirNombre(screen,nombre):
 
     screen.blit(imagen,(0,0))
     screen.blit(introduzcaNombreText,(405,200))
-    screen.blit(nombreText,(420,269))
+    screen.blit(nombreText,(ANCHO/2-nombreText.get_width()/2,269))
 
 # -------------------------------- Pantalla Ranking ----------------------------------------
 
