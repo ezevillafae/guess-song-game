@@ -57,4 +57,7 @@ def ordenarPorPuntajes(matrizPuntajes):
     return sorted(matrizPuntajes, key=lambda x : int(x[1]),reverse=True)
 
 
-
+def borrarArchivoRanking():
+    archivo = open("scoreJugadores.txt","w",encoding="utf-8")
+    archivo.write("")
+    archivo.close()

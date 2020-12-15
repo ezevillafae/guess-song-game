@@ -104,41 +104,112 @@ def bienvenidos(screen,matrizPuntajes):
     numImagen = 1
     intro = pygame.mixer.Sound("sounds/intro.ogg")
     intro.play()
+
+    """Crea los elementos en la pantalla"""
+    imagen = pygame.image.load("imagenes/intro_"+str(numImagen)+".jpg").convert()
+    fuente1= pygame.font.Font("fonts/FRAHV.TTF",18)
+    fuente2 = pygame.font.Font("fonts/framd.ttf",15)
+    pressEnterText = fuente1.render("PRESIONE ENTER PARA JUGAR",1,COLOR_BLANCO)
+    botonRanking = fuente2.render("RANKING",1,COLOR_BLANCO)
+    botonSalir = fuente2.render("SALIR",1,COLOR_BLANCO)
+    botonOpciones = fuente2.render("OPCIONES",1,COLOR_BLANCO)
     
     while not(continuar): # ciclo espera que aprete una tecla para empezar
-        reloj.tick(2) #fps 2
+        reloj.tick(4) #fps 2
+
+        # contador para la animacion
+        if numImagen == 1:
+            numImagen = 2
+        elif numImagen == 2:
+            numImagen = 1
+
+        #Insertar en pantalla
+        imagen = pygame.image.load("imagenes/intro_"+str(numImagen)+".jpg").convert()
+        screen.blit(imagen,(0,0))
+        screen.blit(pressEnterText,(ANCHO/2-pressEnterText.get_width()/2,451.48))
+        superficieBotonRanking = screen.blit(botonRanking, (ANCHO/3-botonRanking.get_width()/2, 510)) #Guardo la posicion del boton
+        superficieBotonOpciones = screen.blit(botonOpciones,(ANCHO/2-botonOpciones.get_width()/2,510))
+        superficieBotonSalir = screen.blit(botonSalir,(687.67-botonSalir.get_width()/2,510))
+
         for e in pygame.event.get():
             if e.type == pygame.QUIT:
                 quit()
             if e.type == pygame.KEYDOWN:
                 if e.key == K_RETURN:
                     continuar = True
-                if e.key == K_0:
-                    ranking(screen,matrizPuntajes)
-        if numImagen == 1: # numImagen dentro de dibujar bienvenidos
-            dibujarBienvenidos(screen,numImagen)
-            numImagen = 2
-        elif numImagen == 2:
-            dibujarBienvenidos(screen,numImagen)
-            numImagen = 1 
+            # Eventos de los botones MOUSE POR ARRIBA
+            if e.type == pygame.MOUSEMOTION: # Cambio de color cuando el mouse pasa por arriba 
+                # BOTON RANKING
+                if superficieBotonRanking.collidepoint(e.pos):
+                    botonRanking = fuente2.render("RANKING",1,COLOR_LETRAS)
+                else:
+                    botonRanking = fuente2.render("RANKING",1,COLOR_BLANCO)
+                #BOTON SALIR
+                if superficieBotonSalir.collidepoint(e.pos):
+                    botonSalir = fuente2.render("SALIR",1,COLOR_LETRAS)
+                else:
+                    botonSalir = fuente2.render("SALIR",1,COLOR_BLANCO)
+                #BOTON OPCIONES
+                if superficieBotonOpciones.collidepoint(e.pos):
+                    botonOpciones = fuente2.render("OPCIONES",1,COLOR_LETRAS)
+                else:
+                    botonOpciones = fuente2.render("OPCIONES",1,COLOR_BLANCO)
+            # Eventos de los botones CLICK
+            if e.type == pygame.MOUSEBUTTONDOWN:
+                if e.button == 1: # si es el boton izquierdo
+                    #BOTON RANKING
+                    if superficieBotonRanking.collidepoint(e.pos):    
+                        ranking(screen,matrizPuntajes)
+                    #BOTON SALIR
+                    if superficieBotonSalir.collidepoint(e.pos):
+                        quit()
+                    if superficieBotonOpciones.collidepoint(e.pos):
+                        print("opciones")
+                        opciones(screen,matrizPuntajes)
+                       
+
         pygame.display.update()
-        
-    intro.set_volume(0.3)
+    intro.fadeout(2000)
     return pygame.time.get_ticks()/1000 #segundos transcurridos en el menú
     
+    
+# ---------------------------------- Pantalla Opciones -----------------------------------
 
-def dibujarBienvenidos(screen,numImagen):
-    """Crea y muestra los elementos en la pantalla"""
-    imagen = pygame.image.load("imagenes/intro_"+str(numImagen)+".jpg").convert()
-    fuente1= pygame.font.Font("fonts/FRAHV.TTF",18)
-    fuente2 = pygame.font.Font("fonts/framd.ttf",15)
-    pressEnterText = fuente1.render("PRESIONE ENTER PARA JUGAR",1,(255,255,255))
-    botonRanking = fuente2.render("MEJORES JUGADORES",1,(255,255,255))
+def opciones(screen,matrizPuntajes):
+    screen.fill(COLOR_FONDO)
+    continuar = False
 
-    #Insertar en pantalla
-    screen.blit(imagen,(0,0))
-    screen.blit(pressEnterText,(384.05,451.48))
-    screen.blit(botonRanking, (300, 510))
+    #crear elementos
+    imagen = pygame.image.load("imagenes/fondo_opciones.gif").convert()
+    fuente1 = pygame.font.Font("fonts/FRAHV.TTF",25)
+    fuente2 = pygame.font.Font("fonts/FRADM.TTF",18)
+    textoBorrarRanking = fuente1.render("BORRAR RANKING",1,COLOR_BLANCO)
+    pressEnterText = fuente2.render("PRESIONE ENTER PARA VOLVER AL MENÚ",1,COLOR_BLANCO)
+    
+    while not(continuar):
+
+        screen.blit(imagen,(0,0))
+        screen.blit(pressEnterText,(ANCHO/2-pressEnterText.get_width()/2,500))
+        superficieBotonBorrarRanking = screen.blit(textoBorrarRanking,(ANCHO/2-textoBorrarRanking.get_width()/2,250))
+        
+        for e in pygame.event.get():
+            if e.type == QUIT:
+                quit()
+            if e.type == KEYDOWN:
+                if e.key == K_RETURN:
+                    continuar = True
+            if e.type == pygame.MOUSEMOTION:
+                if superficieBotonBorrarRanking.collidepoint(e.pos):
+                    textoBorrarRanking = fuente1.render("BORRAR RANKING",1,COLOR_LETRAS)
+                else:
+                    textoBorrarRanking = fuente1.render("BORRAR RANKING",1,COLOR_BLANCO)
+            if e.type == pygame.MOUSEBUTTONDOWN:
+                if superficieBotonBorrarRanking.collidepoint(e.pos):
+                    borrarArchivoRanking()
+                    print("Historial Archivo Borrado")
+        pygame.display.update()
+
+    
 
 # --------------------------------- Pantalla Pedir Nombre ---------------------------------
 
@@ -169,8 +240,8 @@ def dibujarPedirNombre(screen,nombre):
     imagen = pygame.image.load("imagenes/fondo_introducir_nombre.jpg")
     fuente1= pygame.font.Font("fonts/FRADM.TTF",18)
     fuente1Grande = pygame.font.Font("fonts/FRAHV.TTF",36) 
-    introduzcaNombreText = fuente1.render("INTRODUZCA SU NOMBRE",1,(255,255,255))
-    nombreText = fuente1Grande.render(nombre,1,(255,255,255))
+    introduzcaNombreText = fuente1.render("INTRODUZCA SU NOMBRE",1,COLOR_BLANCO)
+    nombreText = fuente1Grande.render(nombre,1,COLOR_BLANCO)
 
     screen.blit(imagen,(0,0))
     screen.blit(introduzcaNombreText,(405,200))
@@ -188,7 +259,7 @@ def ranking(screen,matrizPuntajes):
         matrizPuntajes = matrizPuntajes[:10] #tomo solo 10 si la matriz tiene 10 elementos o más
         print(matrizPuntajes)
     
-    screen.fill((255,255,255)) # Limpiar pantalla
+    screen.fill((COLOR_FONDO)) # Limpiar pantalla
     while not(continuar):
         for e in pygame.event.get():
             if e.type == pygame.QUIT:
@@ -205,7 +276,7 @@ def ranking(screen,matrizPuntajes):
 def dibujarRanking(screen,matrizPuntajes):
     fuente1 = pygame.font.Font("fonts/FRADM.TTF",18)
     fondo = pygame.image.load("imagenes/top_1.jpg")
-    pressEnterText = fuente1.render("PRESIONE ENTER PARA VOLVER AL MENÚ",1,(255,255,255))
+    pressEnterText = fuente1.render("PRESIONE ENTER PARA VOLVER AL MENÚ",1,COLOR_BLANCO)
 
     posXNombre = 250
     posXPuntaje = 450
