@@ -57,6 +57,27 @@ def dameLetraApretada(key):
         return("y")
     elif key == K_z:
         return("z")
+    # SE AGREGARON LOS NÚMEROS DEL 0-9 Y LA LETRA Ñ
+    elif key == K_0:
+        return("0")
+    elif key == K_1:
+        return("1")
+    elif key == K_2:
+        return("2")
+    elif key == K_3:
+        return("3")
+    elif key == K_4:
+        return("4")
+    elif key == K_5:
+        return("5")
+    elif key == K_6:
+        return("6")
+    elif key == K_7:
+        return("7")
+    elif key == K_8:
+        return("8")
+    elif key == K_9:
+        return("9")    
     elif key == K_KP_MINUS:
         return("-")
     elif key == K_SPACE:
@@ -69,14 +90,13 @@ def dameLetraApretada(key):
 # -------------------------------- Pantalla de juego ------------------------------
 
 def dibujar(screen, palabraUsuario, lista, puntos, segundos, ayuda):
+    
     fondo = pygame.image.load("imagenes/fondo_1.jpg")
-
     defaultFont= pygame.font.Font("fonts/FRADM.TTF", TAMANNO_LETRA)
     defaultFontGrande= pygame.font.Font( "fonts/FRADM.TTF", TAMANNO_LETRA_GRANDE)
 
-    
-    screen.blit(fondo,(0,0))
 
+    screen.blit(fondo,(0,0))
     #muestra lo que escribe el jugador
     screen.blit(defaultFont.render(palabraUsuario, 1, COLOR_TEXTO), (181.52, 458.09))
     #muestra el puntaje
@@ -99,13 +119,14 @@ def dibujar(screen, palabraUsuario, lista, puntos, segundos, ayuda):
 
 def bienvenidos(screen,matrizPuntajes):
     """Loop pantalla bienvenidos"""
-    reloj = pygame.time.Clock() # creo el reloj
-    continuar = False
-    numImagen = 1
-    intro = pygame.mixer.Sound("sounds/intro.ogg")
-    intro.play()
 
-    """Crea los elementos en la pantalla"""
+    reloj = pygame.time.Clock() # reloj para controlar fps
+    continuar = False 
+    numImagen = 1 #contador para la animacion
+
+    intro = playSoundIntro() #sonido intro
+
+    """Crea los elementos de la pantalla"""
     imagen = pygame.image.load("imagenes/intro_"+str(numImagen)+".jpg").convert()
     fuente1= pygame.font.Font("fonts/FRAHV.TTF",18)
     fuente2 = pygame.font.Font("fonts/framd.ttf",15)
@@ -115,7 +136,7 @@ def bienvenidos(screen,matrizPuntajes):
     botonOpciones = fuente2.render("OPCIONES",1,COLOR_BLANCO)
     
     while not(continuar): # ciclo espera que aprete una tecla para empezar
-        reloj.tick(4) #fps 2
+        reloj.tick(2) #fps 2
 
         # contador para la animacion
         if numImagen == 1:
@@ -124,12 +145,13 @@ def bienvenidos(screen,matrizPuntajes):
             numImagen = 1
 
         #Insertar en pantalla
-        imagen = pygame.image.load("imagenes/intro_"+str(numImagen)+".jpg").convert()
+        imagen = pygame.image.load("imagenes/intro_"+str(numImagen)+".jpg").convert() #en cada ciclo se cambia la imagen
         screen.blit(imagen,(0,0))
         screen.blit(pressEnterText,(ANCHO/2-pressEnterText.get_width()/2,451.48))
-        superficieBotonRanking = screen.blit(botonRanking, (ANCHO/3-botonRanking.get_width()/2, 510)) #Guardo la posicion del boton
+        #Guardo las superficies/rectangulos de los botones
+        superficieBotonRanking = screen.blit(botonRanking, (ANCHO/3-botonRanking.get_width()/2, 510))
         superficieBotonOpciones = screen.blit(botonOpciones,(ANCHO/2-botonOpciones.get_width()/2,510))
-        superficieBotonSalir = screen.blit(botonSalir,(687.67-botonSalir.get_width()/2,510))
+        superficieBotonSalir = screen.blit(botonSalir,(682.66-botonSalir.get_width()/2,510))
 
         for e in pygame.event.get():
             if e.type == pygame.QUIT:
@@ -141,35 +163,34 @@ def bienvenidos(screen,matrizPuntajes):
             if e.type == pygame.MOUSEMOTION: # Cambio de color cuando el mouse pasa por arriba 
                 # BOTON RANKING
                 if superficieBotonRanking.collidepoint(e.pos):
-                    botonRanking = fuente2.render("RANKING",1,COLOR_LETRAS)
+                    botonRanking = fuente2.render("RANKING",1,COLOR_LETRAS) #cambia de color
                 else:
                     botonRanking = fuente2.render("RANKING",1,COLOR_BLANCO)
                 #BOTON SALIR
                 if superficieBotonSalir.collidepoint(e.pos):
-                    botonSalir = fuente2.render("SALIR",1,COLOR_LETRAS)
+                    botonSalir = fuente2.render("SALIR",1,COLOR_LETRAS) #cambia de color
                 else:
                     botonSalir = fuente2.render("SALIR",1,COLOR_BLANCO)
                 #BOTON OPCIONES
                 if superficieBotonOpciones.collidepoint(e.pos):
-                    botonOpciones = fuente2.render("OPCIONES",1,COLOR_LETRAS)
+                    botonOpciones = fuente2.render("OPCIONES",1,COLOR_LETRAS) #cambia de color
                 else:
                     botonOpciones = fuente2.render("OPCIONES",1,COLOR_BLANCO)
             # Eventos de los botones CLICK
             if e.type == pygame.MOUSEBUTTONDOWN:
                 if e.button == 1: # si es el boton izquierdo
                     #BOTON RANKING
-                    if superficieBotonRanking.collidepoint(e.pos):    
+                    if superficieBotonRanking.collidepoint(e.pos): #entro a la pantalla de ranking    
                         ranking(screen,matrizPuntajes)
                     #BOTON SALIR
-                    if superficieBotonSalir.collidepoint(e.pos):
+                    if superficieBotonSalir.collidepoint(e.pos): #salgo del juego
                         quit()
-                    if superficieBotonOpciones.collidepoint(e.pos):
-                        print("opciones")
+                    if superficieBotonOpciones.collidepoint(e.pos): #entro a la pantalla de opciones
                         opciones(screen,matrizPuntajes)
                        
 
         pygame.display.update()
-    intro.fadeout(2000)
+    intro.fadeout(2000) #baja el volumen durante 2 seg
     return pygame.time.get_ticks()/1000 #segundos transcurridos en el menú
     
     
@@ -214,6 +235,7 @@ def opciones(screen,matrizPuntajes):
 # --------------------------------- Pantalla Pedir Nombre ---------------------------------
 
 def pedirNombre(screen):
+    """Pantalla de pedir nombre retorna el nombre que ingresa el usuario"""
     nombre = ""
     reloj = pygame.time.Clock()
     screen.fill(COLOR_FONDO) #limpiar pantalla anterior
@@ -237,6 +259,7 @@ def pedirNombre(screen):
     return nombre
 
 def dibujarPedirNombre(screen,nombre):
+    """Se encarga de dibujar los elementos en la pantalla """
     imagen = pygame.image.load("imagenes/fondo_introducir_nombre.jpg")
     fuente1= pygame.font.Font("fonts/FRADM.TTF",18)
     fuente1Grande = pygame.font.Font("fonts/FRAHV.TTF",36) 
@@ -257,7 +280,6 @@ def ranking(screen,matrizPuntajes):
     matrizPuntajes = ordenarPorPuntajes(matrizPuntajes) #ordeno los puntajes de mayor a menor 
     if len(matrizPuntajes) > 10:
         matrizPuntajes = matrizPuntajes[:10] #tomo solo 10 si la matriz tiene 10 elementos o más
-        print(matrizPuntajes)
     
     screen.fill((COLOR_FONDO)) # Limpiar pantalla
     while not(continuar):
@@ -274,37 +296,48 @@ def ranking(screen,matrizPuntajes):
 
             
 def dibujarRanking(screen,matrizPuntajes):
+    """se encarga de dibujar todos los elementos de la matriz en la pantalla de ranking"""
     fuente1 = pygame.font.Font("fonts/FRADM.TTF",18)
     fondo = pygame.image.load("imagenes/top_1.jpg")
     pressEnterText = fuente1.render("PRESIONE ENTER PARA VOLVER AL MENÚ",1,COLOR_BLANCO)
 
+    #variables para ubicar elementos en la pantalla
     posXNombre = 250
     posXPuntaje = 450
     posXTop = 100
     posYTopNombrePuntos = 200  
-    textTop = 1  
+    textTop = 1
+
     # Mostrar en pantalla
     screen.blit(fondo,(0,0))
     screen.blit(pressEnterText,(155,500))
     for i in range(len(matrizPuntajes)):
-        nombreActual = matrizPuntajes[i][0]
-        puntajeActual = matrizPuntajes[i][1]
+        nombreActual = matrizPuntajes[i][0] #nombre
+        puntajeActual = matrizPuntajes[i][1] #puntaje
         screen.blit(fuente1.render(str(textTop),1,COLOR_LETRAS),(posXTop,posYTopNombrePuntos))
-        textTop = textTop + 1
+        textTop = textTop + 1 #numero de posicion
         screen.blit(fuente1.render(nombreActual,1,COLOR_LETRAS),(posXNombre,posYTopNombrePuntos))
         screen.blit(fuente1.render(puntajeActual,1,COLOR_LETRAS),(posXPuntaje,posYTopNombrePuntos))
-        posYTopNombrePuntos = posYTopNombrePuntos + 25
+        posYTopNombrePuntos = posYTopNombrePuntos + 25 #para que se ubiquen abajo los siguientes elementos
 
 # ----------------------------- Sonidos ----------------------------------
 
 def playSoundAcert():
     sonido = pygame.mixer.Sound("sounds/sonido_acierto_1.ogg")
     sonido.play()
+    return sonido
 
 def playSoundAcertBonus():
     sonido = pygame.mixer.Sound("sounds/sonido_aciertobonus_1.ogg")
     sonido.play()
+    return sonido
 
 def playSoundError():
     sonido = pygame.mixer.Sound("sounds/sonido_error_1.ogg")
     sonido.play()
+    return sonido
+
+def playSoundIntro():
+    sonido = pygame.mixer.Sound("sounds/intro.ogg")
+    sonido.play()
+    return sonido

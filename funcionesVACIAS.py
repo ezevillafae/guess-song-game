@@ -10,7 +10,7 @@ def modificarArtistaYCancion(primeraLinea,artistaYcancion):
     primeraLinea = filtrar(primeraLinea)
     for e in primeraLinea.split(";"):
         artistaYcancion.append(e)
-    print(artistaYcancion)
+    print(artistaYcancion) #respuestas
             
 def modificarLetra(cancion,letra):
     """Toma una lista y devuelve una nueva lista con elementos sin caracteres especiales y tildes"""
@@ -28,7 +28,7 @@ def lectura(archivo, letra, artistaYcancion):
     modificarLetra(cancion,letra) #llena la lista letra
 
 def seleccion(letra):#elige uno al azar, devuelve ese y el siguiente
-    azar=random.randrange(0,len(letra)-1) #del 0 al anteultimo
+    azar=random.randrange(0,len(letra)-1) 
     siguiente = azar + 1 
     return [letra[azar],letra[siguiente]]
 

@@ -12,52 +12,53 @@ def lecturaArchivoRanking(matrizPuntajes):
     for linea in archivo.readlines():
         lineaActual = linea.replace("\n","") #saco el salto de linea
         nombreYPuntaje = lineaActual.split(" ") #hago una lista con el nombre y puntaje
-        matrizPuntajes.append(nombreYPuntaje) #agrego ese elemento a la lista general
+        matrizPuntajes.append(nombreYPuntaje) #agrego la lista nombreYpuntaje a la lista matrizPuntajes
     archivo.close()
 
 def puntajesMaximos(matrizPuntajes):
     """
-    toma la matriz y devuelve el puntaje mas alto de cada nombre
+    toma la matriz y devuelve el puntaje mas alto de cada nombre sin repetir
     matrizPuntajes[i][0] nombre del elemento
     matrizPuntajes[i][1] puntaje del elemento 
     """
     lista_nueva = []
-    nombres = nombresRepetidos(matrizPuntajes)
+    nombres = nombresSinRepetir(matrizPuntajes) #obtengo los nombres de la matriz pero sin repetir
     puntajeNombreActual = 0
-    for nombre in nombres:
-        puntajeNombreActual = puntajeMaximoDeNombre(matrizPuntajes,nombre)
-        lista_nueva.append([nombre,str(puntajeNombreActual)])
+    for nombre in nombres: #itero sobre los nombres
+        puntajeNombreActual = puntajeMaximoDeNombre(matrizPuntajes,nombre) #obtengo el puntaje maximo de ese nombre
+        lista_nueva.append([nombre,str(puntajeNombreActual)]) #agrego el nombre y su puntaje maximo
 
     return lista_nueva
 
-def nombresRepetidos(matrizPuntajes):
+def nombresSinRepetir(matrizPuntajes):
+    """Se obtienen los nombres de la matriz pero sin repetirlos"""
     repetidos = []
-
     for i in range(len(matrizPuntajes)):
-        if not(matrizPuntajes[i][0] in repetidos):
+        if not(matrizPuntajes[i][0] in repetidos): #si el nombre no está en repetidos
             repetidos.append(matrizPuntajes[i][0])
-
-
     return repetidos
 
 
 def puntajeMaximoDeNombre(matrizPuntajes,nombre):
+    """se obtiene el puntaje maximo de un determinado nombre"""
     maximo = -9999999
     
-    for i in range(len(matrizPuntajes)):
-        nombreActual = matrizPuntajes[i][0]
-        puntajeActual = int(matrizPuntajes[i][1])
-        if nombreActual == nombre:
+    for i in range(len(matrizPuntajes)): #recorro por indice 
+        nombreActual = matrizPuntajes[i][0] #nombre 
+        puntajeActual = int(matrizPuntajes[i][1]) #puntaje
+        if nombreActual == nombre: #si el nombre de la matriz coincide con el nombre pasado por parametro
             if puntajeActual > maximo:
                 maximo = puntajeActual
 
     return maximo
 
 def ordenarPorPuntajes(matrizPuntajes):
+    """ordena los elementos de la matriz segun su puntaje, de mayor a menor"""
     return sorted(matrizPuntajes, key=lambda x : int(x[1]),reverse=True)
 
 
 def borrarArchivoRanking():
+    """Se sobrescribe el archivo scoreJugadores.txt y se borra todo su contenido"""
     archivo = open("scoreJugadores.txt","w",encoding="utf-8")
     archivo.write("")
     archivo.close()

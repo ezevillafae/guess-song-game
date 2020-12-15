@@ -16,10 +16,10 @@ def main():
         #Centrar la ventana y despues inicializar pygame
         os.environ["SDL_VIDEO_CENTERED"] = "1"
         pygame.init()
-        #pygame.mixer.init()
+        pygame.mixer.init()
 
         #Preparar la ventana
-        pygame.display.set_caption("Cancionero...")
+        pygame.display.set_caption("Cancionero")
         screen = pygame.display.set_mode((ANCHO, ALTO))
 
         #Pantalla de bienvenida
@@ -112,7 +112,6 @@ def main():
                         #elige una linea al azar y su siguiente
                         lista=seleccion(letra)
 
-
             segundos = TIEMPO_MAX + segmenu - pygame.time.get_ticks()/1000
 
             #Limpiar pantalla anterior
@@ -126,9 +125,9 @@ def main():
         nombre = pedirNombre(screen) # se pide nombre en pantalla
         
         escrituraArchivoRanking(nombre,puntos) #guardo nombre y puntos en archivo
-        ranking(screen,matrizPuntajes)
+        ranking(screen,matrizPuntajes) # pantalla de ranking
         archivo.close()
 
 #Programa Principal ejecuta Main
-while 1:
+while 1: #para volver a ejecutar el juego
     main()
