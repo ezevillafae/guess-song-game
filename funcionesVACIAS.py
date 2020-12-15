@@ -16,7 +16,7 @@ def modificarLetra(cancion,letra):
     """Toma una lista y devuelve una nueva lista con elementos sin caracteres especiales y tildes"""
     for i in range(len(cancion)):
         linea = filtrar(cancion[i])
-        if len(linea)> 1 and len(linea)<47: # para que entre en la pantalla y no tome lineas vacias
+        if len(linea)> 1 and len(linea)<51: # para que entre en la pantalla y no tome lineas vacias
             letra.append(linea)
 
 def lectura(archivo, letra, artistaYcancion):
