@@ -94,6 +94,8 @@ def dibujar(screen, palabraUsuario, lista, puntos, segundos, ayuda):
     fondo = pygame.image.load("imagenes/fondo_1.jpg")
     defaultFont= pygame.font.Font("fonts/FRADM.TTF", TAMANNO_LETRA)
     defaultFontGrande= pygame.font.Font( "fonts/FRADM.TTF", TAMANNO_LETRA_GRANDE)
+    linea1 = defaultFontGrande.render(lista[0], 1, COLOR_LETRAS)
+    linea2 = defaultFontGrande.render(lista[1], 1, COLOR_LETRAS)
 
 
     screen.blit(fondo,(0,0))
@@ -112,8 +114,8 @@ def dibujar(screen, palabraUsuario, lista, puntos, segundos, ayuda):
     screen.blit(defaultFont.render(ayuda, 1, COLOR_PELI), (ANCHO//2-len(ayuda)*TAMANNO_LETRA//4,33))
 
     #muestra las 2 lineas
-    screen.blit(defaultFontGrande.render(lista[0], 1, COLOR_LETRAS), (ANCHO//2-len(lista[0])*TAMANNO_LETRA_GRANDE//4,187.04))
-    screen.blit(defaultFontGrande.render(lista[1], 1, COLOR_LETRAS), (ANCHO//2-len(lista[1])*TAMANNO_LETRA_GRANDE//4,238.24))
+    screen.blit(linea1, (ANCHO/2-linea1.get_width()/2,187.04))
+    screen.blit(linea2, (ANCHO/2-linea2.get_width()/2,238.24))
 
 # ------------------------------ Pantalla bienvenidos ------------------------------------
 
